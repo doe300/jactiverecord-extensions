@@ -45,6 +45,9 @@ public class PropertyChangeProxyHandler implements ProxyHandler
 	private final Map<ActiveRecord, PropertyChangeSupport> listeners;
 	private final Set<PropertyChangeListener> generalListeners;
 
+	/**
+	 * @param listeners the PropertyChangeListeners to use for all records
+	 */
 	public PropertyChangeProxyHandler(@Nullable final Set<PropertyChangeListener> listeners)
 	{
 		this.listeners = new TreeMap<>();

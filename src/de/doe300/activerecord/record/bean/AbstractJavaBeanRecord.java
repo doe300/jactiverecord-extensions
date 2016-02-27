@@ -39,7 +39,11 @@ public class AbstractJavaBeanRecord extends AbstractActiveRecord implements Java
 {
 	private final PropertyChangeSupport support;
 
-	public AbstractJavaBeanRecord( int primaryKey, POJOBase<?> base )
+	/**
+	 * @param primaryKey
+	 * @param base 
+	 */
+	protected AbstractJavaBeanRecord( int primaryKey, POJOBase<?> base )
 	{
 		super( primaryKey, base );
 		support = new PropertyChangeSupport(this);

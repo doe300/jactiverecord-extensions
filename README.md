@@ -8,3 +8,5 @@ into the main repository.
 Here is a list of the extensions so far:
 
 - **JavaBeanRecord**: an active-record which supports *PropertyChangeListeners* and firing change-events.
+- **AttributeProperty**: mapping of record-attributes to [*JavaFX Properties*](http://download.java.net/jdk8/jfxdocs/javafx/beans/property/Property.html)
+including a generator to automatically generate *properties* from *@AddAttribute*-annotations
