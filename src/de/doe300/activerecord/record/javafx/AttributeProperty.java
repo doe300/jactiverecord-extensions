@@ -129,9 +129,9 @@ public class AttributeProperty<T> extends ObjectProperty<T> implements Property<
 	}
 
 	@Override
-	public void changed(ObservableValue<? extends T> ov, T t, T t1 )
+	public void changed(ObservableValue<? extends T> ov, T oldVal, T newVal )
 	{
-		record.getBase().getStore().setValue( record.getBase(), record.getPrimaryKey(), attributeName, t);
+		record.getBase().getStore().setValue( record.getBase(), record.getPrimaryKey(), attributeName, newVal);
 	}
 
 	@Override
