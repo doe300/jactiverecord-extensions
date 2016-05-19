@@ -43,7 +43,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class JavaBeanRecordTest extends Assert
 {
-	private RecordBase<? extends TestJavaBeanRecord> base;
+	private final RecordBase<? extends TestJavaBeanRecord> base;
 	private static TestPropertyChangeListener listener;
 	private static RecordCore core;
 	

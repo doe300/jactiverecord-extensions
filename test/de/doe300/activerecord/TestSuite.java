@@ -46,4 +46,8 @@ public class TestSuite
 			throw new RuntimeException(ex);
 		}
 	}
+
+	private TestSuite()
+	{
+	}
 }

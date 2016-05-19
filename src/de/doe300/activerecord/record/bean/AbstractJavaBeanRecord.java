@@ -72,6 +72,12 @@ public class AbstractJavaBeanRecord extends AbstractActiveRecord implements Java
 	@Override
 	protected void setProperty(@Nonnull final String name, @Nullable final Object value)
 	{
+		if(!support.hasListeners( name ))
+		{
+			//don't get old value, if nothing will bo notified
+			super.setProperty( name, value );
+			return;
+		}
 		final Object oldValue = getProperty( name, Object.class );
 		super.setProperty( name, value );
 		firePropertyChange( name, oldValue, value);
