@@ -29,11 +29,15 @@ import de.doe300.activerecord.record.attributes.generation.AddAttribute;
 import de.doe300.activerecord.record.attributes.generation.AddAttributes;
 import java.io.IOException;
 import java.io.Writer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyProperty;
+import javax.annotation.Generated;
 import javax.annotation.Nonnull;
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
@@ -61,6 +65,7 @@ public class JavaFXPropertyGenerator extends AbstractProcessor
 {
 
 	private final Set<String> processedElements = new HashSet<>( 10 );
+	private final DateFormat ISO_8601_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
 	@Override
 	public boolean process( Set<? extends TypeElement> annotations, RoundEnvironment roundEnv )
@@ -110,8 +115,12 @@ public class JavaFXPropertyGenerator extends AbstractProcessor
 				writer.append( "import " ).append( ReadOnlyProperty.class.getCanonicalName() ).append( ";\n" );
 				writer.append( "import " ).append( Property.class.getCanonicalName() ).append( ";\n" );
 				writer.append( "import " ).append( AttributeProperty.class.getCanonicalName() ).append( ";\n" );
+				
+				writer.append( "import ").append( Generated.class.getCanonicalName()).append( ";\n");
+				writer.append( "\n");
 
-				//TODO write @Generated annotation (somehow netbeans can't find it)
+				writer.append( "@Generated(value = {\"").append( getClass().getCanonicalName()).append( "\"}, date = \"")
+						.append( ISO_8601_DATE_FORMAT.format( new Date())).append( "\")\n");
 				//we can't create a new property for every method-call, so we need local variables with the properties and add bindings
 				//for that we need to create a class, not an interface
 				writer.append( "abstract class " ).append( generatedFileName ).append( " implements " ).
@@ -145,7 +154,7 @@ public class JavaFXPropertyGenerator extends AbstractProcessor
 					recordTypeElement );
 
 			//warn if type does not extend generated type
-			if ( !recordTypeElement.getSuperclass().toString().equals( generatedFileName ) )
+			if(!ProcessorUtils.extendsType( processingEnv, generatedFileName, recordTypeElement))
 			{
 				processingEnv.getMessager().printMessage( Diagnostic.Kind.WARNING, "Type '" + recordTypeElement.
 						getSimpleName()
